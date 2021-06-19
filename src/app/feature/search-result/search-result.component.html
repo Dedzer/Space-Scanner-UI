@@ -1,0 +1,63 @@
+<app-toolbar></app-toolbar>
+
+<div class="rectangle">
+
+  <div>
+    <mat-expansion-panel [expanded]="true" >
+      <mat-expansion-panel-header class="specific-class" >
+        <mat-panel-title>
+          Available Flights
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngIf="availableFlights">
+        <div *ngFor="let flight of availableFlights" class="flight">
+          <mat-card>
+            <mat-card-title>
+              {{flight.departureAirport}} - {{flight.arrivalAirport}}, {{flight.price}}$
+              <img src="assets/spacex-lunar-starship-on-moon.png" style="float: right">
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{flight.departureDate}}:{{flight.departureTime}} - {{flight.arrivalDate}}:{{flight.arrivalTime}}
+            </mat-card-subtitle>
+
+            <mat-card-actions>
+              <button mat-raised-button (click)="reserveFlight(flight)">Choose</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+      <h2 *ngIf="availableFlights === null || availableFlights.length === 0">No flights found</h2>
+    </mat-expansion-panel>
+  </div>
+  <div style="margin-top: 1%" *ngIf="isOneWay">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Return Flights
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngIf="returnFlights">
+          <div *ngFor="let flight of returnFlights" class="flight">
+            <mat-card>
+              <mat-card-title>
+                {{flight.departureAirport}} - {{flight.arrivalAirport}}, {{flight.price}}$
+                <img src="assets/spacex-lunar-starship-on-moon.png" style="float: right">
+              </mat-card-title>
+              <mat-card-subtitle>
+                {{flight.departureDate}}:{{flight.departureTime}} - {{flight.arrivalDate}}:{{flight.arrivalTime}}
+              </mat-card-subtitle>
+
+              <mat-card-actions>
+                <button mat-raised-button (click)="reserveFlight(flight)">Choose</button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+      </div>
+    <h2 *ngIf="returnFlights === null || returnFlights.length === 0">No flights found</h2>
+    </mat-expansion-panel>
+  </div>
+
+</div>
+
+
+<app-footer></app-footer>

@@ -1,0 +1,62 @@
+.Rectangle-12 {
+  position: relative;
+  bottom: 70%;
+  width: 450px;
+  height: 350px;
+  margin: 0 0 0 50%;
+  padding: 3% 5% 3% 5%;
+  border-radius: 38px;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  border: solid 2px rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.mat-button-toggle-checked {
+  border-radius: 30px !important;
+  background-color: #007AFF !important;
+  color: white !important;
+}
+
+.mat-button-toggle {
+  border-radius: 30px !important;
+  background-color: #FCFCFC;
+  color: black;
+}
+
+.mat-button-toggle-group {
+  border-radius: 30px;
+  border: solid 2px rgba(255, 255, 255, 0.1);
+  background-color: #FCFCFC;
+  margin-bottom: 5%;
+}
+
+.mat-raised-button {
+  border-radius: 30px;
+  border: solid 2px rgba(255, 255, 255, 0.1);
+  width: 150px;
+  background-color: #007AFF;
+  color: white;
+}
+
+.mat-raised-button {
+  border-radius: 30px;
+  border: solid 2px rgba(255, 255, 255, 0.1);
+  width: 150px;
+  background-color: #007AFF;
+  color: white;
+}
+
+/* to change selected item color in the select list */
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #ffffff;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple{
+  background-color: #007AFF;
+}
+
+#inner {
+  display: inline-block;
+}
+

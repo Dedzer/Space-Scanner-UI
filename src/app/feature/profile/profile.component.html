@@ -1,0 +1,183 @@
+<app-toolbar></app-toolbar>
+<div class="profile">
+  <div class="inner">
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header class="specific-class">
+        <mat-panel-title>
+          My Flights
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngIf="flights$">
+        <div *ngFor="let flight of flights$ | async" class="flight">
+          <mat-card>
+            <mat-card-title>
+              <img src="assets/spacex-lunar-starship-on-moon.png" style="float: right">
+              {{flight.tourist.firstName}} {{flight.tourist.lastName}}
+              <br>
+              {{flight.departureAirport}} - {{flight.arrivalAirport}}
+            </mat-card-title>
+
+            <mat-card-subtitle>
+              {{flight.departureDate}}:{{flight.departureTime}} - {{flight.arrivalDate}}:{{flight.arrivalTime}}
+            </mat-card-subtitle>
+
+            <mat-card-actions>
+              <button mat-raised-button [disabled]="showBorderPass" (click)="details(flight)">Details</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <div class="inner">
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header class="specific-class">
+        <mat-panel-title>
+          Edit profile
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <mat-card>
+          <div class="inner">
+            <mat-card-title>
+              Change password
+            </mat-card-title>
+          </div>
+          <div class="inner">
+            <mat-card-content>
+              <div>
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter your password</mat-label>
+                  <input matInput [type]="hide ? 'password' : 'text'" [formControl]="signInPassword" required>
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                          [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="signInPassword.invalid">{{getSignInPasswordErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter your new password</mat-label>
+                  <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required
+                         (change)="checkPasswords()">
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                          [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error style="margin-bottom: 15px"
+                             *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm your new password</mat-label>
+                  <input matInput [type]="hide ? 'password' : 'text'" [formControl]="confirmPassword" required
+                         (change)="checkPasswords()">
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                          [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error>{{getConfirmPasswordErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="inner" style="font-size: 20px">
+                <p style="color: green" *ngIf="successMessage">{{successMessage}}</p>
+                <p style="color: red" *ngIf="errorMessage">{{errorMessage}}</p>
+              </div>
+            </mat-card-content>
+          </div>
+          <div class="inner">
+            <mat-card-actions>
+              <button mat-raised-button (click)="changePassword()">Change</button>
+            </mat-card-actions>
+          </div>
+        </mat-card>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <div class="center" *ngIf="showBorderPass">
+    <div class="border-pass">
+      <mat-card class="border-pass-card" >
+        <div id="borderPass">
+          <mat-card-title class="border-pass-title">
+            <div class="inner">
+              <span>{{borderPass.tourist.firstName}} {{borderPass.tourist.lastName}}</span>
+            </div>
+          </mat-card-title>
+          <mat-card-content>
+            <div class="inner">
+              <div class="border-pass-content-1">
+                <div>
+                  <qr-code
+                    value="{{borderPass.flightId}}-{{borderPass.tourist.touristId}}-{{borderPass.tourist.seatCode}}"
+                    size="250"
+                    errorCorrectionLevel="M"></qr-code>
+                </div>
+                <div>
+                  <span class="title">Shuttle</span>
+                  <br>
+                  <span class="value">{{borderPass.shuttleCode}}</span>
+                  <br>
+                  <br>
+                  <br>
+                  <span class="title">Flight</span>
+                  <br>
+                  <span class="value">FL{{borderPass.flightId}}</span>
+                  <br>
+                  <br>
+                  <br>
+                  <span class="title">Seat</span>
+                  <br>
+                  <span class="value">{{borderPass.tourist.seatCode}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="inner">
+              <div style="width: 405px; height: 85px; background-image: url('/assets/IMG_0687.png');">
+                <div style="margin-bottom: 60px; margin-top: 10px;">
+                  <span class="destination" style="float: left">{{borderPass.departureAirport}}</span>
+                  <span class="destination" style="float: right">{{borderPass.arrivalAirport}}</span>
+                </div>
+                <div>
+                  <span class="destination-1" style="float: left">{{borderPass.departurePlanet}}</span>
+                  <span class="destination-1" style="float: right">{{borderPass.arrivalPlanet}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="inner">
+              <div class="border-pass-content-2">
+                <div style="float:left">
+                  <span style="float:left" class="destination-2">Departure</span>
+                  <br>
+                  <span style="float:left" class="destination-3">{{borderPass.departureDate}}
+                </span>
+                  <br>
+                  <span style="float:left" class="destination-3">{{borderPass.departureTime}}</span>
+                </div>
+                <div style="text-align: center">
+                  <span class="destination-2">Distance</span>
+                  <br>
+                  <span class="destination-3">{{borderPass.distance}}AU</span>
+                </div>
+                <div style="float:right;">
+                  <span style="float:right" class="destination-2">Arrival</span>
+                  <br>
+                  <span style="float:right"
+                        class="destination-3">{{borderPass.arrivalDate}}</span>
+                  <br>
+                  <span style="float:right" class="destination-3">{{borderPass.arrivalTime}}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </div>
+        <mat-card-actions style="float: right;">
+          <button mat-raised-button style="width: 30px" (click)="close()">Close</button>
+          <button mat-raised-button style="width: 30px" (click)="exportAsPDF()">Save</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

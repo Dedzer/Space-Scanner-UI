@@ -1,0 +1,209 @@
+<app-toolbar></app-toolbar>
+<div class="reserve-flight">
+  <div class="inner" *ngIf="flight">
+    <mat-card>
+      <mat-card-title>
+        {{flight.departureAirport}} - {{flight.arrivalAirport}}, {{flight.price}}$
+        <img src="assets/spacex-lunar-starship-on-moon.png" style="float: right">
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{flight.departureDate}}:{{flight.departureTime}} - {{flight.arrivalDate}}:{{flight.arrivalTime}}
+      </mat-card-subtitle>
+    </mat-card>
+  </div>
+  <div class="inner">
+    <mat-card>
+      <mat-card-content>
+        <div>
+          <mat-vertical-stepper [linear]="false" #stepper>
+            <mat-step [stepControl]="personalInformationFormGroup">
+              <form [formGroup]="personalInformationFormGroup">
+                <ng-template matStepLabel>Fill personal information</ng-template>
+                <div>
+                  <div class="inner">
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Enter your First Name</mat-label>
+                      <input matInput formControlName="firstName" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Enter your Last Name</mat-label>
+                      <input matInput formControlName="lastName" required>
+                    </mat-form-field>
+                  </div>
+                  <div class="inner">
+                    <mat-form-field>
+                      <mat-label>Choose your Citizenship</mat-label>
+                      <mat-select formControlName="citizenship" required>
+                        <mat-option *ngFor="let option of planets$ | async" [value]="option.planetCode">
+                          {{option.planetName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Choose your Gender</mat-label>
+                      <mat-select formControlName="gender" required>
+                        <mat-option *ngFor="let option of gender" [value]="option.type">
+                          {{option.description}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="inner">
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Provide your Birth Date</mat-label>
+                      <input matInput [matDatepicker]="birthDate" formControlName="birthDate"
+                             style="color: white">
+                      <mat-datepicker-toggle matSuffix [for]="birthDate"></mat-datepicker-toggle>
+                      <mat-datepicker #birthDate></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="inner">
+                    <mat-form-field>
+                      <mat-label>Choose your Document Type</mat-label>
+                      <mat-select formControlName="documentType" required>
+                        <mat-option *ngFor="let option of documentTypes" [value]="option.type">
+                          {{option.description}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="legacy">
+                      <mat-label>Enter your Document ID</mat-label>
+                      <input matInput formControlName="documentId" required>
+                    </mat-form-field>
+                  </div>
+                  <div style="float: right">
+                    <button mat-raised-button matStepperNext>Next</button>
+                  </div>
+                </div>
+              </form>
+
+            </mat-step>
+            <mat-step [stepControl]="seatCodeFormGroup">
+              <form [formGroup]="seatCodeFormGroup">
+                <ng-template matStepLabel>Choose your Seat</ng-template>
+                <div>
+                  <div style="width: 100%; height: 500px; overflow: scroll; justify-content: center;">
+                    <img src="assets/IMG_0674.PNG">
+                  </div>
+                  <div class="inner">
+                    <mat-form-field>
+                      <mat-label>Choose your Seat</mat-label>
+                      <mat-select formControlName="seatCode" required>
+                        <mat-option *ngFor="let option of seatCodes$ | async" [value]="option.seatCode">
+                          {{option.seatCode}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div style="float: right">
+                    <button mat-raised-button matStepperPrevious>Back</button>
+                    <button mat-raised-button matStepperNext>Next</button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Done</ng-template>
+              <p>You are now done.</p>
+              <div style="float: right">
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button (click)="stepper.reset()">Reset</button>
+                <button mat-raised-button
+                        [disabled]="(seatCodeFormGroup.invalid && personalInformationFormGroup.invalid)"
+                        (click)="reserve()">Reserve
+                </button>
+                <button mat-raised-button *ngIf="borderPass" style="width: 250px" (click)="open()">Open Border Pass
+                </button>
+              </div>
+            </mat-step>
+          </mat-vertical-stepper>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="center" *ngIf="showBorderPass">
+    <div class="border-pass">
+      <mat-card class="border-pass-card">
+        <div id="borderPass">
+          <mat-card-title class="border-pass-title">
+            <div class="inner">
+              <span>{{borderPass.tourist.firstName}} {{borderPass.tourist.lastName}}</span>
+            </div>
+          </mat-card-title>
+          <mat-card-content>
+            <div class="inner">
+              <div class="border-pass-content-1">
+                <div>
+                  <qr-code
+                    value="{{borderPass.flightId}}-{{borderPass.tourist.touristId}}-{{borderPass.tourist.seatCode}}"
+                    size="250"
+                    errorCorrectionLevel="M"></qr-code>
+                </div>
+                <div>
+                  <span class="title">Shuttle</span>
+                  <br>
+                  <span class="value">{{borderPass.shuttleCode}}</span>
+                  <br>
+                  <br>
+                  <br>
+                  <span class="title">Flight</span>
+                  <br>
+                  <span class="value">FL{{borderPass.flightId}}</span>
+                  <br>
+                  <br>
+                  <br>
+                  <span class="title">Seat</span>
+                  <br>
+                  <span class="value">{{borderPass.tourist.seatCode}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="inner">
+              <div style="width: 405px; height: 85px; background-image: url('/assets/IMG_0687.png');">
+                <div style="margin-bottom: 60px; margin-top: 10px;">
+                  <span class="destination" style="float: left">{{borderPass.departureAirport}}</span>
+                  <span class="destination" style="float: right">{{borderPass.arrivalAirport}}</span>
+                </div>
+                <div>
+                  <span class="destination-1" style="float: left">{{borderPass.departurePlanet}}</span>
+                  <span class="destination-1" style="float: right">{{borderPass.arrivalPlanet}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="inner">
+              <div class="border-pass-content-2">
+                <div style="float:left">
+                  <span style="float:left" class="destination-2">Departure</span>
+                  <br>
+                  <span style="float:left" class="destination-3">{{borderPass.departureDate}}
+                </span>
+                  <br>
+                  <span style="float:left" class="destination-3">{{borderPass.departureTime}}</span>
+                </div>
+                <div style="text-align: center">
+                  <span class="destination-2">Distance</span>
+                  <br>
+                  <span class="destination-3">{{borderPass.distance}}AU</span>
+                </div>
+                <div style="float:right;">
+                  <span style="float:right" class="destination-2">Arrival</span>
+                  <br>
+                  <span style="float:right"
+                        class="destination-3">{{borderPass.arrivalDate}}</span>
+                  <br>
+                  <span style="float:right" class="destination-3">{{borderPass.arrivalTime}}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </div>
+        <mat-card-actions style="float: right;">
+          <button mat-raised-button style="width: 30px" (click)="close()">Close</button>
+          <button mat-raised-button style="width: 30px" (click)="exportAsPDF()">Save</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,118 @@
+.reserve-flight {
+  background-color: #111111;
+  min-height: 70vh;
+  padding-top: 2%;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.border-pass {
+  width: 500px;
+  height: 600px;
+}
+
+.mat-card {
+  width: 70%;
+  min-height: 115px;
+  padding: 2%;
+  border-radius: 38px;
+  border: solid 2px rgba(255, 255, 255, 0.1);
+}
+
+.border-pass-card {
+  width: 500px;
+  background-color: #333333 !important;
+  border: solid 2px rgba(5, 90, 183, 0.3) !important;
+  height: 600px;
+}
+
+.border-pass-content-1 {
+  display: grid;
+  grid-template-columns: 250px 155px;
+}
+
+.border-pass-content-2 {
+  display: grid;
+  grid-template-columns: 135px 135px 135px;
+}
+
+.border-pass-title {
+  color: #007AFF;
+}
+
+.title {
+  color: #A49EAFFF;
+  font-size: 18px;
+  float: right;
+}
+
+.value {
+  color: #007aff;
+  font-size: 26px;
+  float: right;
+}
+
+.destination {
+  color: #A49EAFFF;
+  font-size: 17px;
+}
+
+.destination-1 {
+  color: #007aff;
+  font-size: 22px;
+}
+
+.destination-2 {
+  color: #A49EAFFF;
+  font-size: 15px;
+}
+
+.destination-3 {
+  color: #007aff;
+  font-size: 17px;
+}
+
+.inner {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.mat-raised-button {
+  border-radius: 30px;
+  border: solid 2px rgba(255, 255, 255, 0.1);
+  width: 100px;
+  background-color: #007AFF;
+  color: white;
+  margin-right: 10px
+}
+
+.mat-form-field {
+  width: 300px;
+  margin-top: 4%;
+  margin-right: 15%;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #ffffff !important;
+}
+
+::ng-deep .input.mat-input-element {
+  color: #ffffff !important;
+}
+

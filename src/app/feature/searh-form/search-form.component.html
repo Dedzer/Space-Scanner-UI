@@ -1,0 +1,85 @@
+<div class="Rectangle-12">
+  <div class="inner" style="position: relative">
+    <h1 style="alignment: center; color: white">Reserve flight</h1>
+  </div>
+  <div class="inner">
+    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="toggle(group)" value="false">
+      <mat-button-toggle value="false" aria-label="Text align center" style="width: 150px">
+        one way
+      </mat-button-toggle>
+      <mat-button-toggle value="true" aria-label="Text align center" style="width: 150px">
+        two ways
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <form>
+    <div>
+      <ng-container *ngIf="availablePlanets$ | async as availablePlanets">
+        <mat-form-field style="margin-right: 20%">
+          <mat-label>Departure Planet</mat-label>
+          <mat-select [(ngModel)]="SearchForm.departurePlanetCode"
+                      (ngModelChange)="getDepartureAirports()" name="departurePlanetCode">
+            <mat-option *ngFor="let option of availablePlanets" [value]="option.planetCode">
+              {{option.planetName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Arrival Planet</mat-label>
+          <mat-select [(ngModel)]="SearchForm.arrivalPlanetCode"
+                      (ngModelChange)="getArrivalAirports()" name="arrivalPlanetCode">
+            <mat-option *ngFor="let option of availablePlanets" [value]="option.planetCode">
+              {{option.planetName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <mat-form-field style="margin-right: 20%">
+        <mat-label>Departure Airport</mat-label>
+        <mat-select [(ngModel)]="SearchForm.departureAirportCode" name="departureAirportCode">
+          <mat-option *ngFor="let option of departureAirports$ | async" [value]="option.airportCode">
+            {{option.airportName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Arrival Airport</mat-label>
+        <mat-select [(ngModel)]="SearchForm.arrivalAirportCode" name="arrivalAirportCode">
+          <mat-option *ngFor="let option of arrivalAirports$ | async" [value]="option.airportCode">
+            {{option.airportName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="inner">
+      <mat-form-field appearance="outline" style="width: 180px;">
+        <mat-label>Departure</mat-label>
+        <input matInput [matDatepicker]="departure" [(ngModel)]="SearchForm.departureDate" name="departureDate"
+               style="color: white">
+        <mat-datepicker-toggle matSuffix [for]="departure"></mat-datepicker-toggle>
+        <mat-datepicker #departure></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 180px; margin-left: 20%" *ngIf="isOneWay$">
+        <mat-label>Return</mat-label>
+        <input matInput [matDatepicker]="return" [(ngModel)]="SearchForm.returnDepartureDate" name="returnDepartureDate"
+               style="color: white">
+        <mat-datepicker-toggle matSuffix [for]="return"></mat-datepicker-toggle>
+        <mat-datepicker #return></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="inner">
+      <button mat-raised-button [routerLink]="'/search-result'" (click)="findAvailableFlights()">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+    </div>
+
+  </form>
+</div>

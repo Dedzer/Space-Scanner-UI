@@ -1,0 +1,58 @@
+.Rectangle-11 {
+  height: 550px;
+  padding-top: 30px;
+  padding-bottom: 70px;
+  background-color: #222222;
+  width: 100%;
+  text-align: center;
+}
+
+.text-style-1 {
+  width: 429px;
+  height: 84px;
+  font-family: Poppins, fantasy;
+  font-size: 60px;
+  font-weight: 900;
+  line-height: normal;
+  letter-spacing: 2px;
+  text-align: left;
+  margin-right: 15px;
+  -webkit-text-fill-color: #222222;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: whitesmoke;
+}
+
+.text-style-2 {
+  width: 361px;
+  height: 84px;
+  font-family: Poppins, monospace;
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.photo_0 {
+  width: 570px;
+  height: 435px;
+  float: left;
+  object-fit: contain;
+}
+
+.photo_1 {
+  width: 570px;
+  height: 435px;
+  object-fit: contain;
+}
+
+.photo_2 {
+  width: 570px;
+  height: 435px;
+  float: right;
+  object-fit: contain;
+}
+
+#inner {
+  display: inline-block;
+}

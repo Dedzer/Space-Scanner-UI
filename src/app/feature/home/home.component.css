@@ -1,0 +1,7 @@
+.nasa {
+  padding: 10% 10% 5% 20%;
+  position: relative;
+  object-fit: contain;
+  background: url("/assets/nasa-Q1p7bh3SHj8-unsplash@2x.png") center;
+  background-size: cover;
+}

@@ -1,0 +1,38 @@
+.Rectangle-21 {
+  height: 150px;
+  padding-top: 80px;
+  background-color: #000000;
+  width: 100%;
+  text-align: center;
+}
+
+#inner {
+  display: inline-block;
+}
+
+.mat-button {
+  font-family: SFDisplay-Compact, monospace;
+  height: 40px;
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 2;
+  text-align: center;
+  color: #ffffff;
+}
+
+.SPACESCANNER-2021-COPYRIGHTS {
+  width: 186px;
+  height: 14px;
+  margin: 59px 61px 0 33px;
+  opacity: 0.5;
+  font-family: SFDisplay-Compact;
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+

@@ -1,0 +1,91 @@
+<div class="Rectangle-12">
+  <div *ngIf="isSignIn$;else other" class="inner" style="position: relative">
+    <h1 style="alignment: center; color: white">Sign Up</h1>
+  </div>
+  <ng-template #other>
+    <div class="inner" style="position: relative">
+      <h1 style="alignment: center; color: white">Sign In</h1>
+    </div>
+  </ng-template>
+  <div class="inner">
+    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="toggle(group)" value="false">
+      <mat-button-toggle value="false" aria-label="Text align center" style="width: 150px">
+        sign in
+      </mat-button-toggle>
+      <mat-button-toggle value="true" aria-label="Text align center" style="width: 150px">
+        sign up
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <form>
+    <div *ngIf="isSignIn$;else other1">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required
+               (change)="checkPasswords()">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error style="margin-bottom: 15px" *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="confirmPassword" required
+               (change)="checkPasswords()">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>{{getConfirmPasswordErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <ng-template #other1>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" [formControl]="email" required>
+          <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="signInPassword" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="signInPassword.invalid">{{getSignInPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+    </ng-template>
+
+    <div *ngIf="isSignIn$;else other2">
+      <div class="inner" style="font-size: 20px">
+        <p style="color: green" *ngIf="successMessage">{{successMessage}}</p>
+        <p style="color: red" *ngIf="signInPassword">{{errorMessage}}</p>
+      </div>
+      <div class="inner">
+        <button mat-raised-button  (click)="register()">
+          Register Account
+        </button>
+      </div>
+    </div>
+    <ng-template #other2>
+      <div class="inner" style="font-size: 20px">
+        <p style="color: red" *ngIf="errorMessage">{{errorMessage}}</p>
+      </div>
+      <div class="inner">
+        <button mat-raised-button  (click)="login()">
+          Login
+        </button>
+      </div>
+    </ng-template>
+  </form>
+
+
+</div>

@@ -1,0 +1,168 @@
+<app-toolbar></app-toolbar>
+<div class="manage">
+  <div class="inner">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header class="specific-class">
+        <mat-panel-title>
+          Manage Flights
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <mat-card>
+          <div class="inner">
+            <mat-card-title>
+              Create flight
+            </mat-card-title>
+          </div>
+          <div class="inner">
+            <mat-card-content>
+              <div>
+                <mat-vertical-stepper [linear]="true" #stepper>
+                  <mat-step [stepControl]="flightDirectionFormGroup">
+                    <form [formGroup]="flightDirectionFormGroup">
+                      <ng-template matStepLabel>Fill flight direction</ng-template>
+                      <div class="inner">
+                        <ng-container *ngIf="availablePlanets$ | async as availablePlanets">
+                          <mat-form-field style="margin-right: 20%">
+                            <mat-label>Departure Planet</mat-label>
+                            <mat-select formControlName="departurePlanetCode" (ngModelChange)="getDepartureAirports()"
+                                        required>
+                              <mat-option *ngFor="let option of availablePlanets" [value]="option.planetCode">
+                                {{option.planetName}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field>
+                            <mat-label>Arrival Planet</mat-label>
+                            <mat-select formControlName="arrivalPlanetCode" (ngModelChange)="getArrivalAirports()"
+                                        required>
+                              <mat-option *ngFor="let option of availablePlanets" [value]="option.planetCode">
+                                {{option.planetName}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </ng-container>
+                      </div>
+                      <div class="inner">
+                        <mat-form-field style="margin-right: 20%">
+                          <mat-label>Departure Airport</mat-label>
+                          <mat-select formControlName="departureAirportCode" required>
+                            <mat-option *ngFor="let option of departureAirports$ | async" [value]="option.airportCode">
+                              {{option.airportName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                          <mat-label>Arrival Airport</mat-label>
+                          <mat-select formControlName="arrivalAirportCode" required>
+                            <mat-option *ngFor="let option of arrivalAirports$ | async" [value]="option.airportCode">
+                              {{option.airportName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div style="float: right">
+                        <button mat-raised-button matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+
+                  <mat-step [stepControl]="flightDatesFormGroup">
+                    <form [formGroup]="flightDatesFormGroup">
+                      <ng-template matStepLabel>Fill flight dates</ng-template>
+                      <div class="inner">
+                        <mat-form-field appearance="legacy" style="width: 240px; margin-right: 20%">
+                          <mat-label>Departure date</mat-label>
+                          <input matInput [matDatepicker]="departure" formControlName="departureDate"
+                                 style="color: white" required>
+                          <mat-datepicker-toggle matSuffix [for]="departure"></mat-datepicker-toggle>
+                          <mat-datepicker #departure></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field style="width: 240px;">
+                          <mat-label>Departure time</mat-label>
+                          <input matInput name="selected_time_B" formControlName="departureTime"
+                                 [ngxMatTimepicker]="pickerB" placeholder="16:00" readonly />
+                          <mat-icon matSuffix (click)="pickerB.open()">watch_later</mat-icon>
+                        </mat-form-field>
+                        <ngx-mat-timepicker #pickerB></ngx-mat-timepicker>
+                      </div>
+                      <div class="inner">
+                        <mat-form-field appearance="legacy" style="width: 240px; margin-right: 20%">
+                          <mat-label>Arrival date</mat-label>
+                          <input matInput [matDatepicker]="arrival" formControlName="arrivalDate"
+                                 style="color: white" required>
+                          <mat-datepicker-toggle matSuffix [for]="arrival"></mat-datepicker-toggle>
+                          <mat-datepicker #arrival></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field style="width: 240px;">
+                          <mat-label>Arrival time</mat-label>
+                          <input matInput name="selected_time_A" formControlName="arrivalTime"
+                                 [ngxMatTimepicker]="pickerA" placeholder="16:00" readonly/>
+                          <mat-icon matSuffix (click)="pickerA.open()">watch_later</mat-icon>
+                        </mat-form-field>
+                        <ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
+                      </div>
+                      <div style="float: right">
+                        <button mat-raised-button matStepperPrevious>Back</button>
+                        <button mat-raised-button matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+
+                  <mat-step [stepControl]="flightShuttleGroup">
+                    <form [formGroup]="flightShuttleGroup">
+                      <ng-template matStepLabel>Fill shuttle details</ng-template>
+                      <div>
+                        <mat-form-field>
+                          <mat-label>Space Shuttle Code</mat-label>
+                          <mat-select formControlName="shuttleCode" required>
+                            <mat-option *ngFor="let option of shuttles$ | async" [value]="option.spaceShuttleCode">
+                              {{option.spaceShuttleCode}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div style="float: right">
+                        <button mat-raised-button matStepperPrevious>Back</button>
+                        <button mat-raised-button matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+
+                  <mat-step [stepControl]="flightPriceGroup">
+                    <form [formGroup]="flightPriceGroup">
+                      <ng-template matStepLabel>Fill flight ticket price</ng-template>
+                      <div>
+                        <mat-form-field appearance="legacy"  floatLabel="always">
+                          <mat-label>Enter ticket price</mat-label>
+                          <input matInput formControlName="flightPrice" type="number"
+                                 class="right-align" placeholder="0" required>
+                          <span matPrefix>$&nbsp;</span>
+                          <span matSuffix>.00</span>
+                        </mat-form-field>
+                      </div>
+                      <div style="float: right">
+                        <button mat-raised-button matStepperPrevious>Back</button>
+                        <button mat-raised-button matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                  <mat-step>
+                    <ng-template matStepLabel>Done</ng-template>
+                    <p>You are now done.</p>
+                    <div style="float: right">
+                      <button mat-raised-button matStepperPrevious>Back</button>
+                      <button mat-raised-button (click)="stepper.reset()">Reset</button>
+                      <button mat-raised-button (click)="createFlight()">Submit</button>
+                    </div>
+                  </mat-step>
+                </mat-vertical-stepper>
+              </div>
+            </mat-card-content>
+          </div>
+        </mat-card>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>
+<app-footer></app-footer>

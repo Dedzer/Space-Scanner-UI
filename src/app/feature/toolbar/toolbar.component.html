@@ -1,0 +1,31 @@
+<div>
+
+  <mat-toolbar>
+    <img src="../../../assets/rocket_logo.png">
+    <div class="SPACESCANNER">
+      <span class="text-style-1">SPACE</span>
+      <span>SCANNER</span>
+    </div>
+    <button class="mat-button" [routerLink]="'/'">Home</button>
+    <button class="mat-button">Project</button>
+    <button class="mat-button">About</button>
+    <button class="mat-button">Contact</button>
+    <button *ngIf="check();else login" class="mat-stroked-button" [routerLink]="'/sign'">Sign in</button>
+
+    <div class="menu">
+      <ng-template #login>
+        <button [matMenuTriggerFor]="appMenu" mat-icon-button>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #appMenu="matMenu">
+          <ng-template matMenuContent let-name="name">
+            <button mat-menu-item [routerLink]="'/profile'">Profile</button>
+            <button *ngIf="isAdmin()" mat-menu-item [routerLink]="'/manage-flights'">Manage Flights</button>
+            <button mat-menu-item [routerLink]="'/sign'" (click)="logout()">Log off</button>
+          </ng-template>
+        </mat-menu>
+      </ng-template>
+    </div>
+
+  </mat-toolbar>
+</div>
